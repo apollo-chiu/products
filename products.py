@@ -1,16 +1,21 @@
 #先讀取舊檔
+import os #載入作業系統模組
+#讀取檔案
 products = []
-with open('products.csv', 'r', encoding='utf-8') as f:
-	for line in f:
-		line = line.encode('utf-8').decode('utf-8-sig')
-		if '商品名稱,價格' in line:
-			continue
-		name, price = line.strip().split(',')
-		products.append([name, price])
+if os.path.isfile('products.csv'): #檢查檔案在不在
+	print('yeah! 找到檔案了!')
+	with open('products.csv', 'r', encoding='utf-8') as f:
+		for line in f:
+			line = line.encode('utf-8').decode('utf-8-sig') #去除ufeff碼
+			if '商品名稱,價格' in line:
+				continue
+			name, price = line.strip().split(',')
+			products.append([name, price])
+		print(products)
+else:
+	print('找不到檔案....')
 
-print(products)
-
-
+#新增 商品名稱 價格
 while 1:
 	name = input('請輸入商品名稱: ')
 	if name == 'q':
